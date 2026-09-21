@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu ❤️</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+  }
+
+  /* Hati melayang di background */
+  .heart-bg {
+    position: fixed;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 24px;
+    animation: floatUp linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    animation: popIn 0.8s ease-out;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  h1 {
+    color: #e91e63;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .subtitle {
+    color: #666;
+    margin-bottom: 25px;
+    font-style: italic;
+  }
+
+  .love-counter {
+    background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+  }
+
+  .love-counter p { font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px; }
+  .love-counter .time {
+    font-size: 1.3rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+  }
+
+  .message-box {
+    background: #fff0f5;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ffb6c1;
+  }
+
+  #loveMessage {
+    color: #c2185b;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    transition: opacity 0.5s;
+  }
+
+  button {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
+    transition: all 0.3s;
+    margin: 5px;
+  }
+
+  button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(255, 65, 108, 0.5);
+  }
+
+  button:active { transform: translateY(0) scale(0.98); }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+    box-shadow: 0 8px 20px rgba(161, 140, 209, 0.4);
+  }
+
+  .footer {
+    margin-top: 20px;
+    color: #999;
+    font-size: 0.85rem;
+  }
+
+  /* Hati yang muncul saat klik */
+  .click-heart {
+    position: fixed;
+    font-size: 30px;
+    pointer-events: none;
+    animation: clickFloat 1.5s ease-out forwards;
+    z-index: 100;
+  }
+
+  @keyframes clickFloat {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -250px) scale(1.5); opacity: 0; }
+  }
+
+  /* Modal pertanyaan */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .modal.show { display: flex; animation: fadeIn 0.3s; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal-content {
+    background: white;
+    padding: 35px 25px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    animation: popIn 0.4s;
+  }
+
+  .modal-content h2 {
+    color: #e91e63;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+
+  .modal-content p {
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+
+  .modal-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  .yes-btn {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+  }
+
+  #noBtn { transition: all 0.2s; }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>💖 Hai Sayang 💖</h1>
+    <p class="subtitle">"Kamu itu alasan aku senyum tiap hari"</p>
+
+    <div class="love-counter">
+      <p>Kita udah bareng selama:</p>
+      <div class="time" id="loveTimer">Menghitung...</div>
+    </div>
+
+    <div class="message-box">
+      <p id="loveMessage">Klik tombol di bawah ya sayang 😘</p>
+    </div>
+
+    <button onclick="showLove()">💌 Pesan Bucin</button>
+    <button class="btn-secondary" onclick="openModal()">❓ Pertanyaan Penting</button>
+
+    <p class="footer">Dibuat dengan ❤️ cuma buat kamu</p>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2>Aku Mau Tanya Nih 🥺</h2>
+      <p>Kamu mau nggak jadi orang yang terus ada di samping aku, susah seneng bareng, sampai kapanpun?</p>
+      <div class="modal-buttons">
+        <button class="yes-btn" onclick="yesAnswer()">Mau Banget! 💕</button>
+        <button id="noBtn" onclick="noAnswer()">Nggak 😏</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ====== GANTI TANGGAL INI DENGAN TANGGAL JADIAN KALIAN ======
+  const TANGGAL_JADIAN = new Date('2023-01-01T00:00:00');
+  // =============================================================
+
+  // Update timer cinta
+  function updateTimer() {
+    const now = new Date();
+    const diff = now - TANGGAL_JADIAN;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    document.getElementById('loveTimer').textContent =
+      `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+
+  // Pesan-pesan bucin
+  const messages = [
+    "Kamu tau nggak? Setiap detik aku mikirin kamu 🥰",
+    "Kamu itu kayak wifi, tanpa kamu aku nggak bisa connect 💻❤️",
+    "Kalau cinta itu pelajaran, kamu nilai 100-ku 📚💯",
+    "Aku nggak butuh kopi, cukup lihat senyum kamu aja udah bikin melek ☕😍",
+    "Kamu itu alasan aku percaya sama cinta sejati 💘",
+    "Mau tau rahasia? Aku jatuh cinta sama kamu tiap hari 🥺",
+    "Kamu itu seperti matahari, bikin dunia aku cerah ☀️",
+    "Kalau kamu jadi soal, aku rela belajar tiap hari buat jawabnya 📖",
+    "Bintang aja kalah terang sama mata kamu ✨",
+    "Aku nggak minta banyak, cukup kamu yang selalu ada 🌹"
+  ];
+
+  let currentIndex = 0;
+  function showLove() {
+    const msgEl = document.getElementById('loveMessage');
+    msgEl.style.opacity = 0;
+    setTimeout(() => {
+      currentIndex = Math.floor(Math.random() * messages.length);
+      msgEl.textContent = messages[currentIndex];
+      msgEl.style.opacity = 1;
+    }, 300);
+    burstHearts();
+  }
+
+  // Hati melayang background
+  function createBgHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart-bg';
+    heart.textContent = ['❤️','💕','💖','💗','💘'][Math.floor(Math.random()*5)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
+    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 11000);
+  }
+  setInterval(createBgHeart, 400);
+
+  // Hati saat klik di mana aja
+  document.addEventListener('click', (e) => {
+    const heart = document.createElement('div');
+    heart.className = 'click-heart';
+    heart.textContent = ['💖','💕','💗','❤️','💘'][Math.floor(Math.random()*5)];
+    heart.style.left = e.clientX + 'px';
+    heart.style.top = e.clientY + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1500);
+  });
+
+  // Efek ledakan hati
+  function burstHearts() {
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => {
+        const heart = document.createElement('div');
+        heart.className = 'click-heart';
+        heart.textContent = '💖';
+        heart.style.left = (window.innerWidth / 2 + (Math.random() - 0.5) * 300) + 'px';
+        heart.style.top = (window.innerHeight / 2) + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+      }, i * 80);
+    }
+  }
+
+  // Modal logic
+  function openModal() {
+    document.getElementById('modal').classList.add('show');
+  }
+
+  let noCount = 0;
+  function noAnswer() {
+    noCount++;
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.querySelector('.yes-btn');
+
+    // Tombol "Nggak" kabur & mengecil
+    const x = (Math.random() - 0.5) * 200;
+    const y = (Math.random() - 0.5) * 150;
+    noBtn.style.transform = `translate(${x}px, ${y}px) scale(${Math.max(0.3, 1 - noCount * 0.15)})`;
+
+    // Tombol "Mau" makin gede
+    yesBtn.style.transform = `scale(${1 + noCount * 0.2})`;
+
+    const texts = ["Yakin nggak? 🥺", "Beneran nggak? 😢", "Pleaseee... 🙏", "Aku sedih loh 😭", "Kamu tega banget 💔"];
+    if (noCount <= texts.length) {
+      document.querySelector('.modal-content p').textContent = texts[noCount - 1];
+    }
+  }
+
+  function yesAnswer() {
+    document.getElementById('modal').classList.remove('show');
+    const msgEl = document.getElementById('loveMessage');
+    msgEl.textContent = "Yeayy! Aku tau kamu sayang aku! 🥰💕 Aku janji bakal jaga kamu selamanya!";
+    burstHearts();
+    setTimeout(burstHearts, 500);
+    setTimeout(burstHearts, 1000);
+  }
+
+  // Tutup modal kalau klik luar
+  document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target.id === 'modal') e.target.classList.remove('show');
+  });
+</script>
+</body>
+</html>
